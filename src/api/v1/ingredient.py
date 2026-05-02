@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from src.dto.ingredient import GetIngredients
-from src.service.ingredient import get_ingredients
+from src.ingredient.service import get_ingredients
+
 router = APIRouter(prefix="/ingredient")
 
 @router.get("")
