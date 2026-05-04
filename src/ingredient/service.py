@@ -1,5 +1,5 @@
 import psycopg
-
+from uuid import UUID
 def get_ingredients():
     with psycopg.connect("dbname=sk_ax user=dev password=dev1234 host=localhost") as conn:
         with conn.cursor() as cursor:
@@ -16,7 +16,7 @@ def get_ingredients():
             rows = cursor.fetchall()
     return rows
 
-def create_ingredient(name: str, quantity: float, unit: str):
+def create_ingredient(name: str, quantity: float, unit: str) -> UUID :
     with psycopg.connect("dbname=sk_ax user=dev password=dev1234 host=localhost") as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
@@ -24,15 +24,13 @@ def create_ingredient(name: str, quantity: float, unit: str):
                            (
                            "name",
                            quantity,
-                           unit,
-                           expiration_date
+                           unit
                            )
                            VALUES
                            (
                            %s,
                            %s,
-                           %s,
-                           NULL
+                           %s
                            )
                            RETURNING id
                            """,

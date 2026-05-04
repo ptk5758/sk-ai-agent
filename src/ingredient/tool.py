@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from uuid import UUID
 from datetime import date, datetime
 
-from src.ingredient.service import get_ingredients
+from src.ingredient.service import get_ingredients, create_ingredient
 
 class Ingredient(BaseModel):
     id: UUID
@@ -32,3 +32,19 @@ def select_ingredients() -> list[Ingredient]:
             )
         )
     return result
+
+@tool
+def append_ingredient(name: str, quantity: float, unit: str) -> UUID:
+    """
+    새로운 식재료를 DB에 추가하는 함수.
+
+    Args:
+        name (str): 식재료 이름
+        quantity (float): 수량
+        unit (str): 단위 (예: g, ml, 개 등)
+
+    Returns:
+        UUID: 생성된 식재료의 고유 ID
+    """
+    uuid = create_ingredient(name=name, quantity=quantity, unit=unit)
+    return uuid

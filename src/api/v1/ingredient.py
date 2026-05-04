@@ -3,7 +3,7 @@ from src.ingredient.service import get_ingredients, create_ingredient
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage, ToolMessage, SystemMessage
 from src.ingredient.dto import ChatRequest, CreateIngredientRequest
-from src.ingredient.tool import select_ingredients
+from src.ingredient.tool import select_ingredients, append_ingredient
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
 
@@ -47,7 +47,7 @@ router = APIRouter(prefix="/ingredient")
 
 @router.post("/agent")
 def get_ingredient(chat_request: ChatRequest):
-    agent = create_agent("openai:gpt-5.4-mini", tools=[select_ingredients])
+    agent = create_agent("openai:gpt-5.4-mini", tools=[select_ingredients, append_ingredient])
     result = agent.invoke({"messages": [
         SystemMessage("당신은 냉장고 재고 관리 Agent 이다"),
         HumanMessage(chat_request.message)
