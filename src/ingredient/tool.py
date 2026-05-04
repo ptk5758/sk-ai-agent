@@ -10,9 +10,6 @@ class Ingredient(BaseModel):
     name: str
     quantity: float
     unit: str
-    category: str
-    location: str
-    expiration_date: date
     created_at: datetime
     updated_at: datetime
 
@@ -30,11 +27,8 @@ def select_ingredients() -> list[Ingredient]:
                 name=row[1],
                 quantity=row[2],
                 unit=row[3],
-                category=row[4],
-                location=row[5],
-                expiration_date=row[6],
-                created_at=row[7],
-                updated_at=row[8],
+                created_at=row[4],
+                updated_at=row[5],
             )
         )
     return result

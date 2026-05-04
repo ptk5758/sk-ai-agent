@@ -9,9 +9,6 @@ def get_ingredients():
                             name,
                             quantity,
                             unit,
-                            category,
-                            location,
-                            expiration_date,
                             created_at,
                             updated_at
                         FROM ingredients
