@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from src.ingredient.service import get_ingredients
+from src.ingredient.service import get_ingredients, create_ingredient
 from langchain.chat_models import init_chat_model
 from langchain_core.messages import HumanMessage, ToolMessage, SystemMessage
-from src.ingredient.dto import ChatRequest
+from src.ingredient.dto import ChatRequest, CreateIngredientRequest
 from src.ingredient.tool import select_ingredients
 from langchain.agents import create_agent
 from langchain_openai import ChatOpenAI
@@ -52,5 +52,17 @@ def get_ingredient(chat_request: ChatRequest):
         SystemMessage("당신은 냉장고 재고 관리 Agent 이다"),
         HumanMessage(chat_request.message)
         ]})
+    print(result)
+    return result
+
+
+@router.post("/create_ingredient")
+def post_ingredient(create_request: CreateIngredientRequest):
+    result = create_ingredient(
+        name=create_request.name,
+        quantity=create_request.quantity,
+        unit=create_request.unit
+        )
+    
     print(result)
     return result
