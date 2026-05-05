@@ -6,7 +6,9 @@ from langchain_community.vectorstores import Chroma
 from dotenv import load_dotenv
 load_dotenv()
 
-loader = TextLoader("data/김치찌개_레시피.txt", encoding="utf-8")
+FILE_NAME = "토마토_스파게티_레시피.txt"
+
+loader = TextLoader("data/" + FILE_NAME, encoding="utf-8")
 doc = loader.load()
 
 # print(doc)
@@ -26,7 +28,7 @@ chunks = splitter.split_documents(doc)
 # 3. metadata 추가
 for chunk in chunks:
     chunk.metadata = {
-        "source": "김치찌개_레시피.txt",
+        "source": FILE_NAME,
         "type": "recipe"
     }
 
@@ -41,7 +43,7 @@ vector_store = Chroma.from_documents(
 )
 
 # print(vector_store)
-results= vector_store.similarity_search("김치", k=3)
+results= vector_store.similarity_search("된장", k=3)
 
 for result in results:
     print("-------------------------------------------------------------------")
